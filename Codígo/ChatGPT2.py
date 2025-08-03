@@ -2,34 +2,27 @@
 
 import openai
 import time
-import os  # Importa o módulo os para acessar variáveis de ambiente
-# Importa load_dotenv para carregar variáveis de um arquivo .env
-from dotenv import load_dotenv
+import os  # módulo os para acessar variáveis de ambiente
+from dotenv import load_dotenv # load_dotenv carrega variáveis de um arquivo .env
 
-from UOL import get_news  # Importa a função get_news do seu arquivo UOL.py
 
-# --- CARREGA VARIÁVEIS DE AMBIENTE DO ARQUIVO .env (SE EXISTIR) ---
-# Esta linha vai procurar por um arquivo .env na raiz do seu projeto
-# e carregar as variáveis definidas lá para o ambiente do script.
-load_dotenv()
+from UOL import get_news
 
-# --- RECUPERA A CHAVE DE API DE UMA VARIÁVEL DE AMBIENTE ---
-# É MUITO MAIS SEGURO do que ter a chave no código.
-# A variável de ambiente se chamará OPENAI_API_KEY.
+load_dotenv() # procurar por um arquivo .env 
+
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-# Verifica se a chave foi carregada. Se não, avisa e encerra o script.
+# Verifica se a chave foi carregada. Se não, avisa e encerra.
 if not openai.api_key:
     print("ERRO: A chave de API da OpenAI (OPENAI_API_KEY) não foi encontrada nas variáveis de ambiente.")
     print("Por favor, crie um arquivo .env na raiz do seu projeto com 'OPENAI_API_KEY=sua_chave_aqui'")
     print("Ou defina a variável de ambiente OPENAI_API_KEY no seu sistema.")
-    exit()  # Encerra o script se a chave não estiver configurada
+    exit()
 
 print(
     f"DEBUG: Chave de API configurada (primeiros 5 caracteres): {openai.api_key[:5]}*****")
 
-# --- FUNÇÃO PARA INTERAGIR COM O CHATGPT ---
-
+############
 
 def obter_resumo_chatgpt(manchete_text):
     print(
